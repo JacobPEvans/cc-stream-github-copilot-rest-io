@@ -1,0 +1,30 @@
+datatype:
+  type: any
+  lib: custom
+  description: Datatype for GitHub Copilot usage metrics routing
+  value: "'github:copilot:usage'"
+  tags: vct,github,copilot,rest
+github_org:
+  type: string
+  lib: custom
+  description: GitHub organization name for Copilot usage API
+  value: "'your-org-name'"
+  tags: vct,github,copilot,rest
+github_pat:
+  type: encryptedString
+  lib: custom
+  description: GitHub Personal Access Token with manage_billing:copilot and read:org scopes
+  value: changeme
+  tags: vct,github,copilot,rest
+github_team_slug:
+  type: string
+  lib: custom
+  description: GitHub team slug for team-level usage metrics (optional)
+  value: "''"
+  tags: vct,github,copilot,rest
+api_base_url:
+  type: string
+  lib: custom
+  description: GitHub API base URL (supports GitHub Enterprise Server)
+  value: "'https://api.github.com'"
+  tags: vct,github,copilot,rest

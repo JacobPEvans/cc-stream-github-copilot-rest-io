@@ -1,0 +1,7 @@
+required_sections:
+  - Pack Components
+  - Setup
+optional_sections:
+  - Contributing to the Pack
+  - Release Notes
+  - Troubleshooting

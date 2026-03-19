@@ -1,0 +1,290 @@
+GitHub_Copilot_Org_Usage:
+  type: collection
+  ttl: 4h
+  ignoreGroupJobsLimit: false
+  removeFields: []
+  resumeOnBoot: true
+  schedule:
+    cronSchedule: "0 */6 * * *"
+    maxConcurrentRuns: 1
+    skippable: false
+    resumeMissed: false
+    run:
+      rescheduleDroppedTasks: true
+      maxTaskReschedule: 1
+      logLevel: info
+      jobTimeout: "0"
+      mode: run
+      timeRangeType: relative
+      timeWarning: {}
+      expression: "true"
+      minTaskSize: 1MB
+      maxTaskSize: 10MB
+      stateTracking: {}
+      timestampTimezone: UTC
+    enabled: false
+  streamtags:
+    - github
+    - copilot
+  workerAffinity: false
+  collector:
+    conf:
+      discovery:
+        discoverType: none
+        discoverMethod: get
+        pagination:
+          type: none
+          attribute: []
+        enableStrictDiscoverParsing: false
+        enableDiscoverCode: false
+        discoverRequestHeaders: []
+        discoverRequestParams: []
+      collectMethod: get
+      pagination:
+        type: none
+        attribute: []
+      authentication: none
+      timeout: 60
+      useRoundRobinDns: false
+      disableTimeFilter: false
+      decodeUrl: true
+      rejectUnauthorized: true
+      captureHeaders: false
+      stopOnEmptyResults: true
+      retryRules:
+        type: backoff
+        interval: 1000
+        limit: 3
+        multiplier: 2
+        maxIntervalMs: 10000
+        codes:
+          - 429
+          - 503
+        enableHeader: true
+        retryConnectTimeout: false
+        retryConnectReset: true
+        retryHeaderName: retry-after
+      __scheduling:
+        stateTracking: {}
+      collectUrl: "`${C.vars.api_base_url}/orgs/${C.vars.github_org}/copilot/usage/metrics`"
+      collectRequestParams: []
+      collectRequestHeaders:
+        - name: Authorization
+          value: "`Bearer ${C.vars.github_pat}`"
+        - name: Accept
+          value: "'application/vnd.github+json'"
+        - name: X-GitHub-Api-Version
+          value: "'2022-11-28'"
+      authRequestHeaders: []
+    destructive: false
+    encoding: utf8
+    type: rest
+  input:
+    type: collection
+    staleChannelFlushMs: 10000
+    sendToRoutes: false
+    preprocess:
+      disabled: true
+    throttleRatePerSec: 10 MB
+    breakerRulesets:
+      - GitHub Copilot Usage Ruleset
+    pipeline: default
+    output: default
+    metadata: []
+  savedState: {}
+  description: Polls GitHub Copilot organization-level usage metrics from the REST API on a 6-hour schedule
+  notifications: []
+
+GitHub_Copilot_Team_Usage:
+  type: collection
+  ttl: 4h
+  ignoreGroupJobsLimit: false
+  removeFields: []
+  resumeOnBoot: true
+  schedule:
+    cronSchedule: "15 */6 * * *"
+    maxConcurrentRuns: 1
+    skippable: false
+    resumeMissed: false
+    run:
+      rescheduleDroppedTasks: true
+      maxTaskReschedule: 1
+      logLevel: info
+      jobTimeout: "0"
+      mode: run
+      timeRangeType: relative
+      timeWarning: {}
+      expression: "true"
+      minTaskSize: 1MB
+      maxTaskSize: 10MB
+      stateTracking: {}
+      timestampTimezone: UTC
+    enabled: false
+  streamtags:
+    - github
+    - copilot
+  workerAffinity: false
+  collector:
+    conf:
+      discovery:
+        discoverType: none
+        discoverMethod: get
+        pagination:
+          type: none
+          attribute: []
+        enableStrictDiscoverParsing: false
+        enableDiscoverCode: false
+        discoverRequestHeaders: []
+        discoverRequestParams: []
+      collectMethod: get
+      pagination:
+        type: none
+        attribute: []
+      authentication: none
+      timeout: 60
+      useRoundRobinDns: false
+      disableTimeFilter: false
+      decodeUrl: true
+      rejectUnauthorized: true
+      captureHeaders: false
+      stopOnEmptyResults: true
+      retryRules:
+        type: backoff
+        interval: 1000
+        limit: 3
+        multiplier: 2
+        maxIntervalMs: 10000
+        codes:
+          - 429
+          - 503
+        enableHeader: true
+        retryConnectTimeout: false
+        retryConnectReset: true
+        retryHeaderName: retry-after
+      __scheduling:
+        stateTracking: {}
+      collectUrl: "`${C.vars.api_base_url}/orgs/${C.vars.github_org}/teams/${C.vars.github_team_slug}/copilot/usage/metrics`"
+      collectRequestParams: []
+      collectRequestHeaders:
+        - name: Authorization
+          value: "`Bearer ${C.vars.github_pat}`"
+        - name: Accept
+          value: "'application/vnd.github+json'"
+        - name: X-GitHub-Api-Version
+          value: "'2022-11-28'"
+      authRequestHeaders: []
+    destructive: false
+    encoding: utf8
+    type: rest
+  input:
+    type: collection
+    staleChannelFlushMs: 10000
+    sendToRoutes: false
+    preprocess:
+      disabled: true
+    throttleRatePerSec: 10 MB
+    breakerRulesets:
+      - GitHub Copilot Usage Ruleset
+    pipeline: default
+    output: default
+    metadata: []
+  savedState: {}
+  description: Polls GitHub Copilot team-level usage metrics from the REST API on a 6-hour schedule
+  notifications: []
+
+GitHub_Copilot_User_Usage:
+  type: collection
+  ttl: 4h
+  ignoreGroupJobsLimit: false
+  removeFields: []
+  resumeOnBoot: true
+  schedule:
+    cronSchedule: "30 */6 * * *"
+    maxConcurrentRuns: 1
+    skippable: false
+    resumeMissed: false
+    run:
+      rescheduleDroppedTasks: true
+      maxTaskReschedule: 1
+      logLevel: info
+      jobTimeout: "0"
+      mode: run
+      timeRangeType: relative
+      timeWarning: {}
+      expression: "true"
+      minTaskSize: 1MB
+      maxTaskSize: 10MB
+      stateTracking: {}
+      timestampTimezone: UTC
+    enabled: false
+  streamtags:
+    - github
+    - copilot
+  workerAffinity: false
+  collector:
+    conf:
+      discovery:
+        discoverType: none
+        discoverMethod: get
+        pagination:
+          type: none
+          attribute: []
+        enableStrictDiscoverParsing: false
+        enableDiscoverCode: false
+        discoverRequestHeaders: []
+        discoverRequestParams: []
+      collectMethod: get
+      pagination:
+        type: none
+        attribute: []
+      authentication: none
+      timeout: 60
+      useRoundRobinDns: false
+      disableTimeFilter: false
+      decodeUrl: true
+      rejectUnauthorized: true
+      captureHeaders: false
+      stopOnEmptyResults: true
+      retryRules:
+        type: backoff
+        interval: 1000
+        limit: 3
+        multiplier: 2
+        maxIntervalMs: 10000
+        codes:
+          - 429
+          - 503
+        enableHeader: true
+        retryConnectTimeout: false
+        retryConnectReset: true
+        retryHeaderName: retry-after
+      __scheduling:
+        stateTracking: {}
+      collectUrl: "`${C.vars.api_base_url}/user/copilot/usage/metrics`"
+      collectRequestParams: []
+      collectRequestHeaders:
+        - name: Authorization
+          value: "`Bearer ${C.vars.github_pat}`"
+        - name: Accept
+          value: "'application/vnd.github+json'"
+        - name: X-GitHub-Api-Version
+          value: "'2022-11-28'"
+      authRequestHeaders: []
+    destructive: false
+    encoding: utf8
+    type: rest
+  input:
+    type: collection
+    staleChannelFlushMs: 10000
+    sendToRoutes: false
+    preprocess:
+      disabled: true
+    throttleRatePerSec: 10 MB
+    breakerRulesets:
+      - GitHub Copilot Usage Ruleset
+    pipeline: default
+    output: default
+    metadata: []
+  savedState: {}
+  description: Polls GitHub Copilot user-level usage metrics from the REST API on a 6-hour schedule
+  notifications: []

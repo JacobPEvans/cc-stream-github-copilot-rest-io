@@ -1,0 +1,14 @@
+id: default
+groups: {}
+comments: []
+routes:
+  - id: default
+    name: GitHub Copilot Usage
+    final: true
+    disabled: false
+    pipeline: passthru
+    description: "GitHub Copilot usage metrics from REST API"
+    enableOutputExpression: false
+    filter: datatype==C.vars.datatype
+    clones: []
+    output: default
