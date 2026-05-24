@@ -64,17 +64,20 @@ the `cribl_packs` role in
 [ansible-proxmox-apps](https://github.com/JacobPEvans/ansible-proxmox-apps/tree/main/roles/cribl_packs).
 Pack version is pinned in `roles/cribl_packs/defaults/main.yml`.
 
-To roll out a new release: cut a tag in this repo (publishes the `.crbl`
-asset), bump `version:` for `cc-stream-github-copilot-rest-io` in
-`roles/cribl_packs/defaults/main.yml`, then run
-`ansible-playbook playbooks/site.yml --tags cribl_packs` from that repo.
+To roll out a new release:
+
+1. Cut a tag in this repo (publishes the `.crbl` asset).
+2. Bump `version:` for `cc-stream-github-copilot-rest-io` in `roles/cribl_packs/defaults/main.yml`.
+3. Run `ansible-playbook playbooks/site.yml --tags cribl_packs` from that repo.
+
 The role downloads the matching `.crbl`, unpacks it into
 `/opt/cribl/local/cribl/packs/cc-stream-github-copilot-rest-io/`, and
 restarts `cribl.service` only when the version actually changed.
 
 Note: all REST collectors in this pack ship **disabled** by default.
-After install, enable the collectors and configure
-`github_pat` / `github_org` / `github_team_slug` in Cribl Stream UI.
+After install, enable the collectors and configure `github_pat` (requires
+`manage_billing:copilot` and `read:org` scopes), `github_org`,
+`github_team_slug`, and `api_base_url` in the Cribl Stream UI.
 
 ## Release Notes
 
