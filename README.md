@@ -1,5 +1,7 @@
 # cc-stream-github-copilot-rest-io
 
+![Build Release](https://github.com/JacobPEvans-personal/cc-stream-github-copilot-rest-io/actions/workflows/release.yml/badge.svg)
+
 Collects GitHub Copilot usage metrics from the GitHub REST API at the org, team, and user level. Polls the Copilot usage metrics endpoints on a configurable schedule and breaks JSON array responses into individual events for downstream analysis.
 
 ## Pack Components
@@ -59,3 +61,7 @@ The `jsonArrayField` is left empty for top-level JSON arrays. If the API respons
 - 3 REST collectors (org, team, user level)
 - JSON array event breaker for Copilot usage metrics
 - Configurable variables for org, PAT, team, and API base URL
+
+## License
+
+No license specified. Contact the repository owner for usage rights.
