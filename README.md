@@ -24,20 +24,32 @@ This is a **Cribl Stream** pack (scheduled REST collectors), not a Cribl Edge pa
 
 ## Data Contract
 
-Events leave this pack tagged with a `datatype` metadata field; Cribl Stream maps datatypes to
-Splunk sourcetypes/indexes per the table below. Knowledge objects for the sourcetypes ship in
-[VisiCore_TA_AI_Observability](https://github.com/JacobPEvans/VisiCore_TA_AI_Observability) (v0.2.0+).
+Events leave this pack tagged with a `datatype` metadata field. The datatype is the routing
+contract: a downstream Cribl Stream worker maps each datatype to a Splunk sourcetype and index,
+and the consuming Splunk app supplies the matching field extractions and knowledge objects. As
+long as a consumer honors the datatype below, this pack can change collectors without breaking it.
 
 The datatype is driven by the `datatype` pack variable (default `github:copilot:usage`) and is
 shared by all three collectors.
 
-| Input | Datatype | Splunk sourcetype | Index | TA support |
-|---|---|---|---|---|
-| `GitHub_Copilot_Org_Usage` | `github:copilot:usage` | `github:copilot:usage` | `vscode` | ✓ (0.2.0+) |
-| `GitHub_Copilot_Team_Usage` | `github:copilot:usage` | `github:copilot:usage` | `vscode` | ✓ (0.2.0+) |
-| `GitHub_Copilot_User_Usage` | `github:copilot:usage` | `github:copilot:usage` | `vscode` | ✓ (0.2.0+) |
+| Input | Datatype | Splunk sourcetype | Index |
+|---|---|---|---|
+| `GitHub_Copilot_Org_Usage` | `github:copilot:usage` | `github:copilot:usage` | `vscode` |
+| `GitHub_Copilot_Team_Usage` | `github:copilot:usage` | `github:copilot:usage` | `vscode` |
+| `GitHub_Copilot_User_Usage` | `github:copilot:usage` | `github:copilot:usage` | `vscode` |
 
-## Setup
+## Installation
+
+Build the pack archive and import it into Cribl Stream
+(**Processing > Packs > Add Pack > Import from File**):
+
+```bash
+# from the repo root, produce cc-stream-github-copilot-rest-io.crbl
+tar -czf cc-stream-github-copilot-rest-io.crbl data default package.json README.md
+```
+
+Each published GitHub release also ships a prebuilt `.crbl` you can import directly
+instead of building locally.
 
 ### Prerequisites
 
@@ -59,13 +71,17 @@ Configure these in **Knowledge > Variables**:
 | `github_team_slug` | string | *(empty)* | Team slug for team-level metrics |
 | `api_base_url` | string | `https://api.github.com` | API base URL (supports GHES) |
 
-### Enable Collectors
+## Usage
 
 All collectors are delivered **disabled** by default. Enable the collectors you need:
 
 1. **Org-level**: Enable `GitHub_Copilot_Org_Usage` — requires `github_org` and `github_pat`
 2. **Team-level**: Enable `GitHub_Copilot_Team_Usage` — also requires `github_team_slug`
 3. **User-level**: Enable `GitHub_Copilot_User_Usage` — requires `github_pat` with user-level scopes
+
+Once enabled, each collector polls its endpoint every 6 hours, breaks the JSON array response
+into individual daily-metric events via the `GitHub Copilot Usage Ruleset`, and tags every event
+with the configured `datatype` for downstream routing (see [Data Contract](#data-contract)).
 
 ## Troubleshooting
 
@@ -91,3 +107,7 @@ changes, adjust the `jsonArrayField` in the `GitHub Copilot Usage Ruleset`.
 - 3 REST collectors (org, team, user level)
 - JSON array event breaker for Copilot usage metrics
 - Configurable variables for org, PAT, team, and API base URL
+
+---
+
+> Part of a [larger ecosystem of ~40 repos](https://docs.jacobpevans.com) — see how it all fits together.
