@@ -67,6 +67,25 @@ All collectors are delivered **disabled** by default. Enable the collectors you 
 2. **Team-level**: Enable `GitHub_Copilot_Team_Usage` — also requires `github_team_slug`
 3. **User-level**: Enable `GitHub_Copilot_User_Usage` — requires `github_pat` with user-level scopes
 
+## Usage
+
+After enabling collectors, verify data is flowing by searching your destination for events
+with the configured sourcetype:
+
+```spl
+index=vscode sourcetype="github:copilot:usage"
+| stats sum(total_suggestions_count) as suggestions
+        sum(total_acceptances_count) as acceptances
+        BY day
+| eval acceptance_rate=round(acceptances/suggestions*100, 1)
+| sort -day
+```
+
+To trigger a one-time run without waiting for the schedule, use **Datagen > Jobs > Run Now**
+for the desired collector in the Cribl Stream UI. Each event represents one day of metrics
+at the requested scope (org, team, or user); the `day` field contains the date in `YYYY-MM-DD`
+format.
+
 ## Troubleshooting
 
 ### Rate Limiting
